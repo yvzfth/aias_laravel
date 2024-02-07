@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,3 +26,6 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('user/logout', 'logout');
     Route::post('user/refresh', 'refresh');
 });
+
+
+Route::get('table', [DataController::class, 'index']);
