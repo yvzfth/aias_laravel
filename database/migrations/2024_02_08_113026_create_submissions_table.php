@@ -15,13 +15,13 @@ class CreateSubmissionsTable extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->string('submission_period')->nullable();
-            $table->string('name')->nullable();
-            $table->string('surname')->nullable();
-            $table->string('email')->nullable();
-            $table->string('title')->nullable();
-            $table->string('faculty')->nullable();
-            $table->string('department')->nullable();
+            $table->string('submission_period');
+            $table->string('name');
+            $table->string('surname');
+            $table->string('email');
+            $table->string('title');
+            $table->string('faculty');
+            $table->string('department');
             $table->string('work_name');
             $table->string('basic_field');
             $table->string('scientific_field');
@@ -31,7 +31,7 @@ class CreateSubmissionsTable extends Migration
             $table->string('doi_number');
             $table->string('file_path');
             $table->string('score')->default('0');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Beklemede');
             $table->string('comment')->default('No comment yet.');
             $table->string('comment_by')->default('No comment yet.');
             $table->string('comment_date')->default('No comment yet.');

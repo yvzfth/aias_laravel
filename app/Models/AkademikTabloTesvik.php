@@ -9,7 +9,7 @@ class AkademikTabloTesvik extends Model
 {
     use HasFactory;
 
-    protected $table = 'akademik_tablo_tesvik'; // Define the table name
+    protected $table = 'submissions'; // Define the table name
 
     protected $primaryKey = 'id'; // Define the primary key field
 
