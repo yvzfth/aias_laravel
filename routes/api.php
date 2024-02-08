@@ -32,8 +32,6 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::get('table', [DataController::class, 'index']);
 
-
-
 Route::get('activities', [ActivityController::class, 'activity']);
 Route::post('activities', [ActivityController::class, 'store']);
-Route::post('/submissions', [SubmissionController::class, 'store']);
+Route::post('submissions', [SubmissionController::class, 'store']);
