@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CoefficientController;
+use App\Http\Controllers\KatsayiController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -25,3 +27,13 @@ Route::get('table', [DataController::class, 'index']);
 Route::get('activities', [ActivityController::class, 'activity']);
 Route::post('activities', [ActivityController::class, 'store']);
 Route::post('submissions', [SubmissionController::class, 'store']);
+
+
+
+// routes/api.php
+
+
+
+Route::get('/katsayilar', [KatsayiController::class, 'index']);
+Route::put('/katsayilar/{id}', [KatsayiController::class, 'update']);
+
