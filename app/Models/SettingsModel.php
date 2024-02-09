@@ -2,23 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class SettingsModel extends Model
 {
-    use HasFactory, Notifiable;
-
     protected $fillable = [
-        'phone', 'password', 'firstname', 'lastname', 'email',
-    ];
-
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email', 'password', 'phone',
     ];
 }
