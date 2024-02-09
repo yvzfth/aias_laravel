@@ -8,7 +8,7 @@ use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CoefficientController;
 use App\Http\Controllers\KatsayiController;
-
+use App\Http\Controllers\SettingsController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -37,3 +37,10 @@ Route::post('submissions', [SubmissionController::class, 'store']);
 Route::get('/katsayilar', [KatsayiController::class, 'index']);
 Route::put('/katsayilar/{id}', [KatsayiController::class, 'update']);
 
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('update-phone', [SettingsController::class, 'updatePhone']);
+    Route::post('update-password', [SettingsController::class, 'updatePassword']);
+    Route::post('update-email', [SettingsController::class, 'updateEmail']);
+});
