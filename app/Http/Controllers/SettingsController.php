@@ -2,27 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User; // Eğer kullanıcı bilgilerini bu modelden alıyorsanız, kullanıcı modelini eklemeyi unutmayın.
 
 class SettingsController extends Controller
 {
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view('user.edit', compact('user'));
-    }
-
     public function update(Request $request, $id)
     {
+        // İstekten gelen verileri doğrulayın (validate) - isteğe bağlı
+        $request->validate([
+            'phone' => 'string|nullable', // Telefon numarası, string türünde ve boş geçilebilir (nullable) olarak kabul ediliyor.
+            'password' => 'string|nullable', // Şifre, string türünde ve boş geçilebilir (nullable) olarak kabul ediliyor.
+            'email' => 'email|nullable', // E-posta adresi, geçerli bir e-posta adresi olmalı ve boş geçilebilir (nullable) olarak kabul ediliyor.
+        ]);
+
+        // Kullanıcıyı veritabanından bulun
         $user = User::findOrFail($id);
-        
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->phone = $request->input('phone');
 
-        $user->save();
+        // Güncellenecek alanları belirleyin
+        $updateFields = [];
 
-        return redirect()->route('user.edit', $id)->with('success', 'User updated successfully');
+        if ($request->has('phone')) {
+            $updateFields['phone'] = $request->phone;
+        }
+
+        if ($request->has('password')) {
+            $updateFields['password'] = bcrypt($request->password); // Şifreyi şifrele (isteğe bağlı)
+        }
+
+        if ($request->has('email')) {
+            $updateFields['email'] = $request->email;
+        }
+
+        // Kullanıcı bilgilerini güncelleyin
+        $user->update($updateFields);
+
+        // Başarılı bir yanıt döndürün
+        return response()->json(['message' => 'User settings updated successfully'], 200);
     }
 }
