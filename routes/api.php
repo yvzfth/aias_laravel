@@ -6,9 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\CoefficientController;
 use App\Http\Controllers\KatsayiController;
-
 use App\Http\Controllers\SettingsController;
 
 
@@ -44,7 +42,4 @@ Route::put('/katsayilar/{id}', [KatsayiController::class, 'update']);
 
 
 
-
-
-
-Route::middleware('auth:api')->put('/settings', [SettingsController::class, 'update']);
+Route::put('/users', [SettingsController::class, 'update']);

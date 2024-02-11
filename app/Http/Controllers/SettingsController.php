@@ -9,17 +9,37 @@ use App\Models\User;
 
 class SettingsController extends Controller
 {
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = User::findOrFail($id);
-
-        // İlgili sütunları güncelle
-        $user->update([
-            'phone' => $request->input('phone'),
-            'password' => $request->input('password'),
-            'email' => $request->input('email'),
+        // İsteğin doğrulanması
+        $request->validate([
+            'phone' => 'nullable|string',
+            'password' => 'nullable|string',
+            'email' => 'nullable|string|email',
         ]);
 
-        return response()->json(['message' => 'Kullanıcı başarıyla güncellendi'], 200);
+        // Kullanıcıyı bul
+        $user = User::find(auth()->user()->id);
+
+        // Telefon güncellemesi
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+
+        // Şifre güncellemesi
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+
+        // E-posta güncellemesi
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        // Kullanıcıyı kaydet
+        $user->save();
+
+        // Başarılı yanıt
+        return response()->json(['success' => true, 'message' => 'Kullanıcı başarıyla güncellendi', 'data' => $user]);
     }
 }
