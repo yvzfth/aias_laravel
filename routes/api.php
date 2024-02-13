@@ -3,12 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DataController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\ActivityController;
-use App\Http\Controllers\KatsayiController;
-use App\Http\Controllers\SettingsController;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CoefficientController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -33,12 +31,8 @@ Route::post('submissions', [SubmissionController::class, 'store']);
 
 // routes/api.php
 
+Route::get('users', [UserController::class, 'index']);
 
 
-
-
-
-
-
-
-Route::put('/users', [SettingsController::class, 'update']);
+Route::put('coefficients/{id}', [CoefficientController::class, 'update']);
+Route::get('coefficients', [CoefficientController::class, 'get']);
