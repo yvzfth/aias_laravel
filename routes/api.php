@@ -26,6 +26,8 @@ Route::get('table', [DataController::class, 'index']);
 
 Route::get('activities', [ActivityController::class, 'activity']);
 Route::post('activities', [ActivityController::class, 'store']);
+Route::put('activities/{id}', [ActivityController::class, 'update']);
+Route::delete('activities/{id}', [ActivityController::class, 'destroy']);
 Route::post('submissions', [SubmissionController::class, 'store']);
 
 

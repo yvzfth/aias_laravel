@@ -15,15 +15,39 @@ class ActivityController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'academic_activity_type' => 'required|string|max:255',
-            'activity_id' => 'required|string|max:255',
+        // Validate request data
+        $validatedData = $request->validate([
+            'academic_activity_type' => 'required|string',
+            'activity_id' => 'required|string',
             'description' => 'required|string',
-            'point' => 'numeric|nullable',
+            'point' => 'required|numeric',
         ]);
 
-        $activity = Activity::create($request->all());
+        // Create new activity
+        return Activity::create($validatedData);
+    }
 
-        return response()->json($activity, 201);
+    public function update(Request $request, Activity $activity)
+    {
+        // Validate request data
+        $validatedData = $request->validate([
+            'academic_activity_type' => 'required|string',
+            'activity_id' => 'required|string',
+            'description' => 'required|string',
+            'point' => 'required|numeric',
+        ]);
+
+        // Update the activity
+        $activity->update($validatedData);
+
+        return $activity;
+    }
+
+    public function destroy(Activity $activity)
+    {
+        // Delete the activity
+        $activity->delete();
+
+        return response()->json(['message' => 'Activity deleted successfully']);
     }
 }
