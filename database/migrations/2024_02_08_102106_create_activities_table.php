@@ -15,10 +15,10 @@ class CreateActivitiesTable extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->id();
-            $table->string('academic_activity_type', 100);
+            $table->string('academic_activity_type');
             $table->string('activity_id', 50);
             $table->text('description');
-            $table->decimal('point', 10, 2)->nullable();
+            $table->decimal('point', 10, 2);
             $table->timestamps();
         });
     }
