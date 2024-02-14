@@ -14,6 +14,42 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class SubmissionController extends Controller
 {
+    public function index(Request $request)
+    {
+        try {
+            // Start with all submissions
+            $submissions = Submission::query();
+
+            // Filter by faculty name if provided in the request
+            if ($request->has('faculty')) {
+                $submissions->where('faculty', $request->input('faculty'));
+            }
+
+            // Filter by submission period if provided in the request
+            if ($request->has('submission_period')) {
+                $submissions->where('submission_period', $request->input('submission_period'));
+            }
+
+            // Get the filtered submissions
+            $filteredSubmissions = $submissions->get();
+
+            // Returning a response with the filtered submissions
+            return response()->json($filteredSubmissions, 200);
+        } catch (Exception $e) {
+            // Log the error for debugging
+            $errorMessage = 'Error fetching submissions: ' . $e->getMessage() .
+                ', File: ' . $e->getFile() .
+                ', Line: ' . $e->getLine() .
+                ', Stack trace: ' . $e->getTraceAsString();
+            Log::error($errorMessage);
+
+            // Include the error message in the response
+            return response()->json([
+                'error' => 'Error fetching submissions',
+                'details' => $errorMessage
+            ], 500);
+        }
+    }
     public function store(Request $request)
     {
         try {
